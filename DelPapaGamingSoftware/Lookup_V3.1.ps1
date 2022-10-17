@@ -49,6 +49,7 @@ FUNCTION findFile{
     }
     }
 }
+#DeviceInventory
 FUNCTION createLogFile{
     param([String]$CompName,$incr)
     [String]$curDir = Get-Location
@@ -80,6 +81,7 @@ Write-Host $text[$indx]
 [string[]]$arrayOffline = Get-Content -Path "$($curDir)\files\Log\OFFLINE.txt"; Write-Host "Number of Logged offline: ", $arrayOffline.length
 [string[]]$arrayDev = Get-Content -Path "$($curDir)\files\List\computers.txt"; Write-Host "Number of company devices TD: ", $arrayDev.length
 
+#DeviceInventory
 FUNCTION NotFound{
     param($CompName)
     Invoke-Command -ComputerName $compName -ScriptBlock {Get-PSDrive | Where {$_.Free -gt 0}}
@@ -126,6 +128,7 @@ for($i=$start; $i -lt $array.length; $i++){
  
     }
 }
+#DeviceInventory
 FUNCTION compInfo {
 param($array)
 [int]$start= Read-Host "Enter start point of look up.(2-" $array.length  ")"
@@ -169,6 +172,7 @@ for($i=$start; $i -lt $array.length; $i++){
  
     }
 }
+#DeviceInventory
 FUNCTION compInfoToFile {
 param($array)
 $incr=0
