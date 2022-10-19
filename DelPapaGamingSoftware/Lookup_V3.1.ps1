@@ -26,15 +26,14 @@ ________         .__ __________                       ________  .__          __
 /___,' \___|_\/    \__,_| .__/ \__,_| /___,' |_|___/\__|
                         |_|                             
 "@
-[String]$curDir = Get-Location
+$curDir = Get-Location
 Write-Host "Current Working Directory: $curDir"
 FUNCTION findFile{
-    
-    [String]$curDir = Get-Location
-    $curDir
-    $file = "$($curDir)\files\Log\OFFLINE.txt","$($curDir)\files\List\computers.txt","$($curDir)\files\List\names.txt","$($curDir)\files\List\names1.txt"
+    # Full path of the file
+    $file = 'C:\DelPapaGamingSoftware\files\Log\OFFLINE.txt','C:\DelPapaGamingSoftware\files\List\computers.txt','C:\DelPapaGamingSoftware\files\List\names.txt','C:\DelPapaGamingSoftware\files\List\names1.txt'
 
     for($i=0; $i -lt $file.length;$i++){
+
     if (!(Test-Path $file[$i]))
     {
         New-Item -path $file[$i]-type "file" -value "my new text"
@@ -49,21 +48,19 @@ FUNCTION findFile{
     }
     }
 }
-#DeviceInventory
 FUNCTION createLogFile{
-    param([String]$CompName,$incr)
-    [String]$curDir = Get-Location
-    $file = "$($curDir)\files\Log\computerInfo\$($CompName)"
-    $temp="$($file)$($incr).txt"
+    param($CompName,$incr)
+    $file = 'C:\DelPapaGamingSoftware\files\Log\computerInfo'+[string]$CompName
+    $temp=$file+$incr+'.txt'
     "tempfile:", $temp
     
     if (!(Test-Path $temp))
     {
-        New-Item -path $file[$i]-type "file" -value "my new text"
+        New-Item -path $temp -type "file" -value 0
         Write-Host "Created new file and text content added"
         $content = Get-Content $temp
         $content[0..($content.length-2)]|Out-File $temp -Force
-        return [String]$temp
+        return $temp
     }
     elseif($incr -lt 10)
     {
@@ -77,11 +74,10 @@ FUNCTION createLogFile{
 findFile
 $indx= Get-Random -Minimum 0 -Maximum 3
 Write-Host $text[$indx]
-[string[]]$array = Get-Content -Path "$($curDir)\files\List\names1.txt"; Write-Host "Computers in List: ", $array.length
-[string[]]$arrayOffline = Get-Content -Path "$($curDir)\files\Log\OFFLINE.txt"; Write-Host "Number of Logged offline: ", $arrayOffline.length
-[string[]]$arrayDev = Get-Content -Path "$($curDir)\files\List\computers.txt"; Write-Host "Number of company devices TD: ", $arrayDev.length
+[string[]]$array = Get-Content -Path 'C:\DelPapaGamingSoftware\files\List\names1.txt'; Write-Host "Computers in List: ", $array.length
+[string[]]$arrayOffline = Get-Content -Path 'C:\DelPapaGamingSoftware\files\Log\OFFLINE.txt'; Write-Host "Number of Logged offline: ", $arrayOffline.length
+[string[]]$arrayDev = Get-Content -Path 'C:\DelPapaGamingSoftware\files\List\computers.txt'; Write-Host "Number of company devices TD: ", $arrayDev.length
 
-#DeviceInventory
 FUNCTION NotFound{
     param($CompName)
     Invoke-Command -ComputerName $compName -ScriptBlock {Get-PSDrive | Where {$_.Free -gt 0}}
@@ -108,8 +104,7 @@ FUNCTION ResetAdPass{
 }
 FUNCTION Full_List {
 param($array)
-[String]$curDir = Get-Location
-"EMPTY `rEMPTY" | Out-File -FilePath $curDir+ \Log\OFFLINE.txt
+"EMPTY `rEMPTY" | Out-File -FilePath C:\DelPapaGamingSoftware\Log\OFFLINE.txt
 [int]$start= Read-Host "Enter start point of look up.(2-" $array.length  ")"
 for($i=$start; $i -lt $array.length; $i++){
         $RUser = $array[$i]
@@ -121,14 +116,13 @@ for($i=$start; $i -lt $array.length; $i++){
         } 
         else {
             "The remote machine is Down"
-             $RUser | Out-File -FilePath $curDir+ \Log\OFFLINE.txt -Append
+             $RUser | Out-File -FilePath C:\DelPapaGamingSoftware\Log\OFFLINE.txt -Append
         }
         
       
  
     }
 }
-#DeviceInventory
 FUNCTION compInfo {
 param($array)
 [int]$start= Read-Host "Enter start point of look up.(2-" $array.length  ")"
@@ -172,12 +166,11 @@ for($i=$start; $i -lt $array.length; $i++){
  
     }
 }
-#DeviceInventory
 FUNCTION compInfoToFile {
 param($array)
 $incr=0
 [int]$start= Read-Host "Enter start point of look up.(2-" $array.length  ")"
-    for($i=$start; $i -lt $array.length; $i++){
+for($i=$start; $i -lt $array.length; $i++){
         $CompName = $array[$i]
         $i
         $CompName
@@ -253,8 +246,7 @@ while($App=$true){
                     } 
                     else {
                     "The remote machine is Down"
-                    [String]$curDir = Get-Location
-                    $enter | Out-File -FilePath "$($curDir)\files\Log\OFFLINE.txt" -Append
+                    $enter | Out-File -FilePath C:\DelPapaGamingSoftware\files\Log\OFFLINE.txt -Append
                     }
                 }
         
